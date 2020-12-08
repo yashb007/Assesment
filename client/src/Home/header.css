@@ -1,0 +1,43 @@
+.back {
+    top: 0px;
+    left: 0px;
+    height: 70px;
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    box-shadow: 0px 3px 6px #0000000F;
+    opacity: 1;
+}
+
+.linkcolor{
+    color:black
+}
+
+.signup{
+    color: hsl(87, 73%, 46%);
+}
+.list{
+size: 22px;    
+height: 22px;
+text-align: center;
+letter-spacing: 0.49px;
+color: #000000;
+}
+.loginBut{
+    width  : 134px;
+    height: 38px;
+background: #7ECB20 0% 0% no-repeat padding-box;
+border-radius:  25px;
+border-style: none;
+opacity: 1;
+}
+
+ul.select-dropdown,
+ul.dropdown-content {
+  width: auto !important;
+  top: 120% !important;
+  color: #000000;
+}
+
+.drawer{
+   width:500px;
+flex-shrink: 0
+}

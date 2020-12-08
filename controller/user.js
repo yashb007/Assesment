@@ -16,23 +16,8 @@ const transporter = nodemailer.createTransport(sendgridTransport({
 
 
 exports.signup = (req,res) =>{
-    const {first_name,last_name,email,password} = req.body 
-    if(!email || !password || !first_name || !last_name) {
-     res.status(422).json({error:"please add all the fields"})
-     return
-    }
-   
-    
-    if(password.length < 6){
-        return res.json({error : "Password must be of length 6 or more"})
-    }
-
-   user.findOne({email}).then(us => {
-       console.log(us)
-       if(us){
-        return res.json({error  : "This email is already registered"})
-       }
-
+    const {first_name,last_name,email,password,sent_otp,otp} = req.body 
+  if(sent_otp == otp){
        bcrypt.hash(password,12)
        .then(hashedpassword=>{
              const user = new User({
@@ -63,10 +48,55 @@ exports.signup = (req,res) =>{
     .catch(err=>{
       console.log(err)
     })
+  }
+  else{
+      return res.json({error : "Enter correct Otp"})
+  }
+   }
 
 
-   })
+exports.otp = (req,res) =>{
+    console.log(req.body)
+    const {first_name,last_name,email,password} = req.body 
+    if(!email || !password || !first_name || !last_name) {
+     res.status(422).json({error:"please add all the fields"})
+     return
+    }
+   
+    
+    if(password.length < 6){
+        return res.json({error : "Password must be of length 6 or more"})
+    }
+
+   user.findOne({email}).then(us => {
+       console.log(us)
+       if(us){
+        return res.json({error  : "This email is already registered"})
+       }
+
+       let characters = '1234567890';
+                var charactersLength = characters.length;
+                var result = ''
+                for ( var i = 0; i < 4; i++ ) {
+                    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+                 }
+
+             transporter.sendMail({
+                to:`${first_name} <${email}>`,
+                from:"yyashpal_be18@thapar.edu",
+                   subject:"verify account",
+                   html:`
+                   <p>Otp is </p>${result}
+                   `
+               }).then(() => {
+                   return res.json({result})
+               })
+                   
+               }
+
+        )
 }
+
 
 exports.signin = (req,res)=>{
     const {email,password} = req.body
@@ -78,6 +108,9 @@ exports.signin = (req,res)=>{
         if(!savedUser){
            return res.status(422).json({error:"Invalid Email or password"})
         }
+
+        
+
         bcrypt.compare(password,savedUser.password)
         .then(doMatch=>{
             if(doMatch){
