@@ -1,7 +1,9 @@
 import React,{useState,useEffect} from 'react';
-import './header.css'
+import '../css/header.css'
 import Header from './header'
-import M from 'materialize-css/dist/js/materialize.min.js';
+import Thanku from './thanku'
+import img from '../asset/img.jpg'
+import M from 'materialize-css';
 // const Otp = ({props}) => {
   class Otp extends React.Component{
 
@@ -19,15 +21,18 @@ componentDidMount(){
 
   console.log(this.props)
  // M.AutoInit()
+ //
 }
 
       state = {
-       first_name  : null,
-       last_name : null , 
-       email : null,
-       password : null,
+       first_name  : this.props.data.first_name,
+       last_name : this.props.data.last_name , 
+       password : this.props.data.password , 
+       email : this.props.data.email,
        otpsent : false,
-       otp_back:null
+       otp_back:this.props.data.otp_back,
+       otp_front:null,
+       match:false
       }
 
       handleChange=(e)=>{
@@ -39,9 +44,12 @@ componentDidMount(){
 
 
  subDetails = () => {
+   console.log(this.state.otp_front)
     //e.preventDefault();
+    console.log("subbb")
     if(this.state.otp_front == this.state.otp_back){
-    fetch("http://localhost:8080/user/signin",{
+      console.log("matched")
+    fetch("/user/signup",{
       method:"Post",
       headers:{
         "Content-Type":"application/json"
@@ -56,8 +64,15 @@ componentDidMount(){
         }
         else{
           console.log("1234")
-          M.toast({html:"Registered Successfully  ",classes:"#43a047 green darken-1"})
-       console.log(data)
+          this.setState({
+            match : true
+          })
+          window.location.reload()
+         M.toast({html:"Registered Successfully  ",classes:"#43a047 green darken-1"})
+                
+                
+          console.log(data)
+          console.log(this.state)
       //     setData({otpsent : true,otp_back : data.result})
          }
       }
@@ -65,28 +80,41 @@ componentDidMount(){
 }}
 
 render(){
+  if(!this.state.match){
 return (
     <div>
    <span className="left-align" style={{marginLeft:"-600px"}}> <i className="fa fa-arrow-left "  aria-hidden="true"></i></span>
 
-<div className=" center-align" style={{marginTop:"120px"}} >
+<div className=" center-align" style={{marginTop:"80px"}} >
 
 <h4 > OTP sent!  </h4>
 
 <div className="row">
 <div className=" col s12 ">
-    <input id="otp_back" type="email" className="validate black-text " onChange={this.handleChange}
-     placeholder="OTP"  style={{width:"367px",height:"57px",fontSize:"32px",background: "#FFFFFF 0% 0% no-repeat padding-box",borderRadius:"1px solid #707070",border: "1px solid #707070",borderStyle:"none"}}/>
+    <input id="otp_front" type="text" className="validate black-text " onChange={this.handleChange}
+     placeholder="Enter your OTP"  style={{width:"367px",height:"57px",fontSize:"32px",background: "#FFFFFF 0% 0% no-repeat padding-box",borderRadius:"32px",borderColor:"2px solid black",borderStyle:"none"}}/>
 </div>
 </div>
 <p >One time passcode sent to your email ID-</p>
-<p>dxubwdux</p>
-<button className="btn center-align white-text"    style={{width:"367px",height:"57px",fontSize:"32px",backgroundColor:"#7ECB20",borderRadius:"32px",borderStyle:"none"}}  >Enter</button>   
+<p>{this.state.email}</p>
+<button className=" center-align white-text " onClick={this.subDetails}     style={{width:"367px",height:"57px",fontSize:"32px",backgroundColor:"#7ECB20",borderRadius:"32px",borderStyle:"none"}}  >Enter</button>   
 
 </div>
 </div>
-)
 
+)}
+else{
+  return(
+  <div>
+     
+  <img src={img} />
+     
+   <h4> <b>Thanks. Successfull</b></h4>   
+
+
+</div>
+  )
+}
 
 }}
 

@@ -4,8 +4,8 @@ import Content from './content'
 function Home() {
   return (
     <div >
-<Header />    
-    <Content />
+      <Header />    
+      <Content />
     </div>
   );
 }

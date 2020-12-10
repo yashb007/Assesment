@@ -1,0 +1,13 @@
+@media(max-width:750px){
+    .wd{
+        width:75vh;
+        margin:0;
+        padding : 0;
+    }
+    .main{
+        width:75vh;
+        margin:0;
+        padding : 0;
+    }
+}
+

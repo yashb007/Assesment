@@ -10,14 +10,14 @@ const user = require('../models/user');
 
 const transporter = nodemailer.createTransport(sendgridTransport({
     auth:{
-        api_key:""
+        api_key : process.env.API_KEY
     }
 }))
 
 
 exports.signup = (req,res) =>{
     const {first_name,last_name,email,password,sent_otp,otp} = req.body 
-  if(sent_otp == otp){
+  
        bcrypt.hash(password,12)
        .then(hashedpassword=>{
              const user = new User({
@@ -32,7 +32,7 @@ exports.signup = (req,res) =>{
               .then(user=>{
                   transporter.sendMail({
                       to:`${user.first_name} <${user.email}>`,
-                      from : "yyashpal_be18@thapar.edu",
+                      from : "bansaly37@gmail.com",
                       subject:"signup success",
                       html:"<h1>welcome to virtual Police station</h1>"
                   }).then(() => {
@@ -48,10 +48,7 @@ exports.signup = (req,res) =>{
     .catch(err=>{
       console.log(err)
     })
-  }
-  else{
-      return res.json({error : "Enter correct Otp"})
-  }
+  
    }
 
 
@@ -83,7 +80,7 @@ exports.otp = (req,res) =>{
 
              transporter.sendMail({
                 to:`${first_name} <${email}>`,
-                from:"yyashpal_be18@thapar.edu",
+                from:"bansaly37@gmail.com",
                    subject:"verify account",
                    html:`
                    <p>Otp is </p>${result}
@@ -152,7 +149,7 @@ exports.forget = (req,res)=>{
             user.save().then((result)=>{
                 transporter.sendMail({
                  to:`${user.name} <${user.email}>`,
-                 from:"yyashpal_be18@thapar.edu",
+                 from:"bansaly37@gmail.com",
                     subject:"password reset",
                     html:`
                     <p>You requested for password reset</p>
