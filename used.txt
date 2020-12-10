@@ -1,0 +1,24 @@
+Backend Environment : - Node JS(version : 15.4.0)
+
+Frontend  :-HTML,CSS,JAVAScript,bootstrap,materializeCSS,materialUI, React JS(version : 16.0)
+
+Database :- Mongo DB Atlas online version
+
+NPM Packages : -
+   
+   Package : Version
+
+   bcrypt: "^5.0.0",
+   body-parser: "^1.19.0",
+   cors: "^2.8.5",
+   crypto: "^1.0.1",
+   express: "^4.17.1",
+   jsonwebtoken: "^8.5.1",
+   materialize-css: "^1.0.0",
+   mongoose: "^5.11.4",
+   nodemailer: "^6.4.16",
+   nodemailer-sendgrid-transport: "^0.2.0" 
+   @material-ui/core: "^4.11.2",	
+
+
+Email servive : SendGrid and nodemailer
